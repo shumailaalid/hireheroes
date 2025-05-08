@@ -7,22 +7,27 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time, re, csv
+from webdriver_manager.chrome import ChromeDriverManager
 
 # ─── your existing scraper logic, refactored into a function ───────────────
 def scrape_e5_army(download_dir: Path, username: str, password: str) -> pd.DataFrame:
     # set up download folder
-    download_dir.mkdir(exist_ok=True)
+    user_data_dir = tempfile.mkdtemp(prefix="chropro_")
+
     prefs = {
         "download.default_directory": str(download_dir),
         "plugins.always_open_pdf_externally": True,
     }
     opt = webdriver.ChromeOptions()
-    # **no** --headless here
-    opt.add_argument("--start-maximized")  
-    opt.add_argument("--disable-blink-features=AutomationControlled")
-    opt.add_experimental_option("prefs", prefs)
+    # **no** --headless, so the GUI still appears
+    opt.add_argument(f"--user-data-dir={user_data_dir}")          # <-- here
+    opt.add_argument("--start-maximized")
+    opt.add_argument("--disable-blink-features=Auto")
+    # … your prefs …
 
-    driver = webdriver.Chrome(options=opt)
+    # This downloads the correct Linux64 binary, puts it in ~/.cache, and ensures +x
+    service = Service(ChromeDriverManager().install())
+    driver  = webdriver.Chrome(service=service, options=opt)
     wait   = WebDriverWait(driver, 20)
 
     # helper to scroll & click
@@ -134,8 +139,8 @@ def scrape_e5_army(download_dir: Path, username: str, password: str) -> pd.DataF
 st.set_page_config(page_title="E-5 Army Scraper", layout="wide")
 st.title("Hire Heroes USA: Army E-5 Profiles")
 
-USERNAME = ''#st.secrets["HHU_USER"]
-PASSWORD = ''#st.secrets["HHU_PASS"]
+USERNAME = st.secrets["HHU_USER"]
+PASSWORD = st.secrets["HHU_PASS"]
 DOWNLOAD_DIR = Path("downloads")
 
 if st.button("Run Scraper (Chrome GUI will pop up)"):
