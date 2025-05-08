@@ -25,6 +25,11 @@ def scrape_e5_army(download_dir: Path, username: str, password: str) -> pd.DataF
     opt.add_argument("--user-data-dir=" + user_data_dir)
     opt.add_argument("--start-maximized")
     opt.add_argument("--disable-blink-features=AutomationControlled")
+    opt.add_argument("--headless=new")      # or "--headless" for older ChromeDriver
+    opt.add_argument("--disable-gpu")       # required on some Linux setups
+    opt.add_argument("--no-sandbox")
+    opt.add_argument("--disable-dev-shm-usage")
+    opt.add_argument("--remote-debugging-port=9222")
     # … your prefs …
 
     # This downloads the correct Linux64 binary, puts it in ~/.cache, and ensures +x
