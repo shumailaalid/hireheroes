@@ -34,7 +34,7 @@ def scrape_e5_army(download_dir: Path, username: str, password: str) -> pd.DataF
 
     # This downloads the correct Linux64 binary, puts it in ~/.cache, and ensures +x
     service = Service("/usr/bin/chromedriver")
-    driver  = webdriver.Chrome(service=service, options=opts)
+   
     driver  = webdriver.Chrome(service=service, options=opt)
     wait   = WebDriverWait(driver, 20)
 
