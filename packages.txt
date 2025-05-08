@@ -9,3 +9,5 @@ libdrm2
 libdbus-1-3
 libxcomposite1
 libxdamage1
+chromium
+chromium-driver
