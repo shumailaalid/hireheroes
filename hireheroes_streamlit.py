@@ -21,9 +21,10 @@ def scrape_e5_army(download_dir: Path, username: str, password: str) -> pd.DataF
     }
     opt = webdriver.ChromeOptions()
     # **no** --headless, so the GUI still appears
-    opt.add_argument(f"--user-data-dir={user_data_dir}")          # <-- here
+    opt.binary_location = "/usr/bin/chromium"
+    opt.add_argument("--user-data-dir=" + user_data_dir)
     opt.add_argument("--start-maximized")
-    opt.add_argument("--disable-blink-features=Auto")
+    opt.add_argument("--disable-blink-features=AutomationControlled")
     # … your prefs …
 
     # This downloads the correct Linux64 binary, puts it in ~/.cache, and ensures +x
