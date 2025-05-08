@@ -8,7 +8,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time, re, csv
 from webdriver_manager.chrome import ChromeDriverManager
-
+import tempfile, shutil
 # ─── your existing scraper logic, refactored into a function ───────────────
 def scrape_e5_army(download_dir: Path, username: str, password: str) -> pd.DataFrame:
     # set up download folder
