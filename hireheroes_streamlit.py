@@ -134,8 +134,8 @@ def scrape_e5_army(download_dir: Path, username: str, password: str) -> pd.DataF
 st.set_page_config(page_title="E-5 Army Scraper", layout="wide")
 st.title("Hire Heroes USA: Army E-5 Profiles")
 
-USERNAME = st.secrets["HHU_USER"]
-PASSWORD = st.secrets["HHU_PASS"]
+USERNAME = ''#st.secrets["HHU_USER"]
+PASSWORD = ''#st.secrets["HHU_PASS"]
 DOWNLOAD_DIR = Path("downloads")
 
 if st.button("Run Scraper (Chrome GUI will pop up)"):
